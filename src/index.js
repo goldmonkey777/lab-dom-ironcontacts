@@ -38,24 +38,57 @@ tableBody.appendChild(exampleRow);
 // Get the first 3 contacts from the 'contacts' array.
 const threeContacts = contacts.splice(0, 3);
 
-// Your code goes here ...
+
+// Helper function to create a contact row
+function createContactRow(contact) {
+  const row = document.createElement("tr");
+  row.innerHTML = `
+    <td>
+      <img src="${contact.pictureUrl}" />
+    </td>
+    <td> ${contact.name} </td>
+    <td> ${contact.popularity.toFixed(2)} </td>
+    <td>
+      <button class="btn-delete">Delete</button>
+    </td>
+    <td>
+      <button class="btn-like">
+        <img src="./images/icon.png" alt="like" />
+      </button>
+    </td>
+  `;
+
+  // ITERATION 2 - Delete Button
+  const deleteBtn = row.querySelector(".btn-delete");
+  deleteBtn.addEventListener("click", function () {
+    row.remove();
+  });
+
+  // ITERATION 3 - Like Button
+  const likeBtn = row.querySelector(".btn-like");
+  likeBtn.addEventListener("click", function () {
+    likeBtn.classList.toggle("selected");
+  });
+
+  return row;
+}
+
+// ITERATION 1 - Display 3 contacts
+threeContacts.forEach(function (contact) {
+  const row = createContactRow(contact);
+  tableBody.appendChild(row);
+});
 
 
   
-  // ITERATION 2 - Delete Buttons
-  
-  // Your code goes here ...
-  
-  
-
-  // ITERATION 3 - Like Buttons
-
-  // Your code goes here ...
-
-  
-  
-
-
 // Bonus: ITERATION 4 - Add Random Contacts
+buttonAddRandom.addEventListener("click", function () {
+  if (contacts.length === 0) return;
+  const randomIndex = Math.floor(Math.random() * contacts.length);
+  const splicedArr = contacts.splice(randomIndex, 1);
+  const randomContact = splicedArr[0];
+  const row = createContactRow(randomContact);
+  tableBody.appendChild(row);
+});
 
 // Your code goes here ...
